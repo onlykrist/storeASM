@@ -13,7 +13,7 @@ var publicDir = require('path').join(__dirname,'/public');
 app.use(express.static(publicDir));
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb+srv://tuandz123:3O6AaLvx8mcA0PLL@cluster0.v7dmx.mongodb.net/mystore";
+var url = "mongodb+srv://tiendung20:CR8kwEcISjylBr88@cluster0.vjnfl.mongodb.net/test";
 //npm i handlebars consolidate --save
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
