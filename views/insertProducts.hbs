@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Products</title>
+</head>
+<body>
+    <form action="/doInsertProducts" method="post">
+        Name <input type="text" name="txtName" id="">
+        <br>
+        Size <input type="text" name="txtSize" id="">
+        <br>    
+        Price <input type="text" name="txtPrice" id="">
+        <br>
+        Amount <input type="text" name="txtAmount" id="">
+        <label for style="color: brown;">{{model.amount}}</label>
+        <input type="submit" value="Insert">
+    </form>
+</body>
+</html>

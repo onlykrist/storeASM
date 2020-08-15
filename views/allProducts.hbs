@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>All Products</title>
+</head>
+<body>
+    <form action="/doSearchProducts" method="post">
+        Name <input type="text" name="txtName" id="">
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <button><a href="insertProducts">Add new products</a></button>
+    <hr>
+    <table class="table bordered">
+        <thead>
+             <tr>
+              <th>Id Products</th>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Delete</th>
+              <th>Update</th>
+            </tr>
+        </thead>
+        {{#each model}}
+        <tr>
+            <td>{{_id}} </td>
+            <td>{{name}}</td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+            <td>{{amount}}</td>
+            <td><a href="/delete?id={{_id}}">Delete</a></td>
+            <td><a href="/update?id={{_id}} ">Update</a></td>
+        </tr>
+        {{/each}}
+    </table>
+
+</body>
+</html>
