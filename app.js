@@ -13,18 +13,18 @@ var publicDir = require('path').join(__dirname,'/public');
 app.use(express.static(publicDir));
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb+srv://tiendung20:CR8kwEcISjylBr88@cluster0.vjnfl.mongodb.net/test";
+var url = "mongodb+srv://tiendung20:CR8kwEcISjylBr88@cluster0.vjnfl.mongodb.net/shopdb";
 //npm i handlebars consolidate --save
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
 app.set('view engine','hbs');
 
 app.get('/',(req,res)=>{
-    res.render('index');
+    res.render('allProducts');
 })
 app.get('/products',async function(req,res){
     let client= await MongoClient.connect(url);
-    let dbo = client.db("mystore");
+    let dbo = client.db("shopdb");
     let results = await dbo.collection("products").find({}).toArray();
     res.render('allProducts',{model:results});
 })
@@ -40,7 +40,7 @@ app.post('/doInsertProducts',async (req,res)=>{
     let inputAmount = req.body.txtAmount;
     let newProducts = { name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
     let client= await MongoClient.connect(url);
-    let dbo = client.db("mystore");
+    let dbo = client.db("shopdb");
     await dbo.collection("products").insertOne(newProducts);
     res.redirect('/products');
 })
@@ -48,7 +48,7 @@ app.post('/doInsertProducts',async (req,res)=>{
 app.get('/delete',async (req,res)=>{
     let inputId = req.query.id;
     let client= await MongoClient.connect(url);
-    let dbo = client.db("mystore");
+    let dbo = client.db("shopdb");
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
     await dbo.collection("products").deleteOne(condition);
@@ -58,7 +58,7 @@ app.get('/delete',async (req,res)=>{
 app.post('/doSearchProducts',async (req,res)=>{
     let inputName = req.body.txtName;
     let client= await MongoClient.connect(url);
-    let dbo = client.db("mystore");
+    let dbo = client.db("shopdb");
     let results = await dbo.collection("products").find({name: new RegExp(inputName,'i')}).toArray();
     
     res.render('allProducts',{model:results});
@@ -68,7 +68,7 @@ app.post('/doSearchProducts',async (req,res)=>{
 app.get('/update',async function(req,res){
     let inputId = req.query.id;
     let client= await MongoClient.connect(url);
-    let dbo = client.db("mystore");
+    let dbo = client.db("shopdb");
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
     let results = await dbo.collection("products").find(condition).toArray();
@@ -85,7 +85,7 @@ app.post('/doupdate',async (req,res)=>{
     let client= await MongoClient.connect(url);
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
-    let dbo = client.db("mystore"); 
+    let dbo = client.db("shopdb"); 
     await dbo.collection("products").updateMany(condition,Change);
     res.redirect('/products');
 })  
