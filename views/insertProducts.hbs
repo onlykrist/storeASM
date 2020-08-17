@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Products</title>
 </head>
+
 <body>
     <form action="/doInsertProducts" method="post">
-        Name <input type="text" name="txtName" id="">
-        <br>
-        Size <input type="text" name="txtSize" id="">
-        <br>    
-        Price <input type="text" name="txtPrice" id="">
-        <br>
-        Amount <input type="text" name="txtAmount" id="">
-        <label for style="color: brown;">{{model.amount}}</label>
-        <input type="submit" value="Insert">
+        <center>
+            Name <br> <input type="text" name="txtName" id="">
+            <br>
+            <label for style="color: brown;">{{model.nameError}}</label>
+            <br>
+            Size <br> <input type="text" name="txtSize" id="">
+            <br>
+            <label for style="color: brown;">{{model.sizeError}}</label>
+            <br>
+            Price <br> <input type="text" name="txtPrice" id="">
+            <br>
+            <label for style="color: brown;">{{model.priceError}}</label>
+            <br>
+            Amount <br> <input type="text" name="txtAmount" id="">
+            <br>
+            <label for style="color: brown;">{{model.amountError}}</label>
+            <br>
+            Image <br> <input type="text" name="txtImage" id="">
+            <br> <br>
+            <input type="submit" value="Insert">
+        </center>
     </form>
 </body>
+
 </html>
