@@ -57,8 +57,10 @@ app.post('/doInsertProducts',async (req,res)=>{
             res.render('insertProducts',{model:modelError1});
         }
         let client= await MongoClient.connect(url);
-        let dbo = client.db("figureshop");
-        await dbo.collection("products").insertOne(newProducts);
+        var ObjectID = require('mongodb').ObjectID;
+        let condition = {"_id" : ObjectID(inputId)};
+        let dbo = client.db("figureshop"); 
+        await dbo.collection("products").updateMany(condition,Change);
         res.redirect('/products');
     }
 })
