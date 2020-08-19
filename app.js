@@ -44,9 +44,6 @@ app.post('/doInsertProducts',async (req,res)=>{
     if(inputName.trim().length ==0){
         let modelError ={
                 nameError:"You have not entered a Name!",
-                sizeError:"You have not entered a Size",
-                priceError:"You have not entered a Price",
-                amountError:"You have not entered a Amount",
             };
         res.render('insertProducts',{model:modelError});
     }else{
@@ -55,12 +52,10 @@ app.post('/doInsertProducts',async (req,res)=>{
                                 amountError:"Only enter number"
         };
             res.render('insertProducts',{model:modelError1});
-        }
+        }   
         let client= await MongoClient.connect(url);
-        var ObjectID = require('mongodb').ObjectID;
-        let condition = {"_id" : ObjectID(inputId)};
-        let dbo = client.db("figureshop"); 
-        await dbo.collection("products").updateMany(condition,Change);
+        let dbo = client.db("figureshop");   
+        await dbo.collection("products").insertOne(newProducts);
         res.redirect('/products');
     }
 })
@@ -95,18 +90,17 @@ app.get('/update',async function(req,res){
 })
 
 app.post('/doupdate',async (req,res)=>{
+    let inputId = req.body.id;
     let inputName = req.body.txtName;
     let inputSize = req.body.txtSize;
     let inputPrice = req.body.txtPrice;
     let inputAmount = req.body.txtAmount;
     let inputImage = req.body.txtImage;
-    let Change = {$set:{ name : inputName , size : inputSize , price : inputPrice , amount : inputAmount , image : inputImage}};
+    let Change = {$set:
+        { name : inputName , size : inputSize , price : inputPrice , amount : inputAmount , image : inputImage}};
     if(inputName.trim().length ==0){
         let modelError ={
                 nameError:"You have not entered a Name!",
-                sizeError:"You have not entered a Size",
-                priceError:"You have not entered a Price",
-                amountError:"You have not entered a Amount",
             };
         res.render('insertProducts',{model:modelError});
     }else{
@@ -120,7 +114,7 @@ app.post('/doupdate',async (req,res)=>{
         var ObjectID = require('mongodb').ObjectID;
         let condition = {"_id" : ObjectID(inputId)};
         let dbo = client.db("figureshop"); 
-        await dbo.collection("products").updateMany(condition,Change);
+        await dbo.collection("products").updateOne(condition,Change);
         res.redirect('/products');
-    } 
+    }
 })  

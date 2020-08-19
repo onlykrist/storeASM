@@ -15,6 +15,7 @@
         <form action="/doupdate" method="post">
             {{#each model}}
             <center>
+                <input type="hidden" value="{{_id}}" name="id" id="">
                 Name <br> <input type="text" value="{{name}}" name="txtName" id=""></Name> <br>
                 Size <br> <input type="text" value="{{size}}" name="txtSize" id=""></Size> <br>
                 Price <br> <input type="text" value="{{price}}" name="txtPrice" id=""></Price> <br>
