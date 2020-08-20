@@ -39,13 +39,38 @@ app.post('/doInsertProducts',async (req,res)=>{
     let inputPrice = req.body.txtPrice;
     let inputAmount = req.body.txtAmount;
     let inputImage = req.body.txtImage;
+
     //only enter Character, enter number is error
-    for(let i = 0 ;i<10;i++){
-        if (inputName.includes(""+i)){
-            res.render('insertProducts',{nameError:"Only character!",priceError:null,amountError:null})
-            return false;
-            }
-        }
+    // for(let i = 0 ;i<10;i++){
+    //     if (inputName.includes(""+i)){
+    //         res.render('insertProducts',{nameError:"Only character!",priceError:null,amountError:null})
+    //         return false;
+    //         }
+    //     }
+    //ki tu dau la chu, ki tu cuoi la so
+    if (typeof inputName[0] !== "string" || isNaN(+inputName[inputName.length-1]))
+    {
+        return res.render('insertProducts',{nameError:"Ki tu dau la chu, ki tu cuoi la so",priceError:null,amountError:null})
+    }
+
+    //trong ten phai co abc
+    // if(!inputName.includes('abc')){
+    //     res.render('insertProducts',{nameError:"Phai co ki tu abc",priceError:null,amountError:null})
+    //     return false;
+    // }
+
+    //abc o dau
+    // if(inputName[0].toString() !== 'a' || inputName[1].toString() !== 'b' || inputName[2].toString() !== 'c' ){
+    // res.render('insertProducts',{nameError:"Phai co ki tu abc",priceError:null,amountError:null})
+    // return false;
+    // }
+
+    //abc o cuoi
+    // if(inputName[inputName.trim().length-1].toString() !== 'c' || inputName[inputName.trim().length-2].toString() !== 'b' || inputName[inputName.trim().length-3].toString() !== 'a'){
+    // res.render('insertProducts',{nameError:"Phai co ki tu abc",priceError:null,amountError:null})
+    // return false;
+    // }
+
     //neu khong nhap gia tri
     if(inputName.trim().length ==0){  
         res.render('insertProducts',{nameError:"You not input Name!",priceError:null,amountError:null});
@@ -55,12 +80,11 @@ app.post('/doInsertProducts',async (req,res)=>{
             res.render('insertProducts',{nameError:null,priceError:"Chi duoc nhap so",amountError:"Chi duoc nhap so"});
             return false;
         };
-        //gia tri lon hon hoac nho hon
+        //khong duoc nhap vao so am
     if(inputPrice < 1 || inputAmount < 1){
         res.render('insertProducts',{nameError:null,priceError:"Gia tri phai lon hon 0", amountError:"Gia tri phai lon hon 0"});
         return false;
     }  
-
         let newProducts = { name : inputName , size : inputSize , price : inputPrice , amount : inputAmount , image : inputImage};
         let client= await MongoClient.connect(url);
         let dbo = client.db("figureshop");
@@ -82,7 +106,8 @@ app.post('/doSearchProducts',async (req,res)=>{
     let inputName = req.body.txtName;
     let client= await MongoClient.connect(url);
     let dbo = client.db("figureshop");
-    let results = await dbo.collection("products").find({name: new RegExp(inputName,"i")}).toArray();
+    let results = await dbo.collection("products").find({name: new RegExp(inputName,"i")}).sort({ Name: -1 }).toArray();
+    //let results = await dbo.collection("products").find({}).sort({ Name: -1 }).toArray();
     
     res.render('allProducts',{model:results});
 })
