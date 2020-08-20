@@ -10,22 +10,21 @@
 <body>
     <form action="/doInsertProducts" method="post">
         <center>
+            <h1>Add Products</h1>
             <input type="hidden" name="id" id="">
             Name <br> <input type="text" name="txtName" id="">
             <br>
-            <label for style="color: brown;">{{model.nameError}}</label>
+            <label for style="color: brown;">{{nameError}}</label>
             <br>
             Size <br> <input type="text" name="txtSize" id="">
             <br>
-            <label for style="color: brown;">{{model.sizeError}}</label>
-            <br>
             Price <br> <input type="text" name="txtPrice" id="">
             <br>
-            <label for style="color: brown;">{{model.priceError}}</label>
+            <label for style="color: brown;">{{priceError}}</label>
             <br>
             Amount <br> <input type="text" name="txtAmount" id="">
             <br>
-            <label for style="color: brown;">{{model.amountError}}</label>
+            <label for style="color: brown;">{{amountError}}</label>
             <br>
             Image <br> <input type="text" name="txtImage" id="">
             <br> <br>

@@ -67,13 +67,16 @@
         </ul>
         <form style="padding: 15px 0;" action="/doSearchProducts" method="post">
           <input type="text" name="txtName" id="" style=";">
+            <label for style="color: brown;">{{model.searchError}}</label>
           <input type="submit" value="Search">
+    
         </form>
       </div>
     </div>
   </nav>
 
   <body>
+    
     <br>
     <button><a href="insertProducts">Add new products</a></button>
     <hr>

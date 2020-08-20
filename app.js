@@ -39,25 +39,32 @@ app.post('/doInsertProducts',async (req,res)=>{
     let inputPrice = req.body.txtPrice;
     let inputAmount = req.body.txtAmount;
     let inputImage = req.body.txtImage;
-    let newProducts = { name : inputName , size : inputSize , price : inputPrice , amount : inputAmount , image : inputImage};
-
-    if(inputName.trim().length ==0){
-        let modelError ={
-                nameError:"You have not entered a Name!",
-            };
-        res.render('insertProducts',{model:modelError});
+    //only enter Character, enter number is error
+    for(let i = 0 ;i<10;i++){
+        if (inputName.includes(""+i)){
+            res.render('insertProducts',{nameError:"Only character!",priceError:null,amountError:null})
+            return false;
+            }
+        }
+    
+    if(inputName.trim().length ==0){  
+        res.render('insertProducts',{nameError:"You not input Name!",priceError:null,amountError:null});
     }else{
         if(isNaN(inputPrice,inputAmount)){
-            let modelError1 =  {priceError:"Only enter numbers",
-                                amountError:"Only enter number"
+            res.render('insertProducts',{nameError:null,priceError:"Chi duoc nhap so",amountError:"Chi duoc nhap so"});
+            return false;
         };
-            res.render('insertProducts',{model:modelError1});
-        }   
+
+    if(inputPrice < 1 || inputAmount < 1){
+        res.render('insertProducts',{nameError:null,priceError:"Gia tri phai lon hon 0", amountError:"Gia tri phai lon hon 0"});
+        return false;
+    }  
+        let newProducts = { name : inputName , size : inputSize , price : inputPrice , amount : inputAmount , image : inputImage};
         let client= await MongoClient.connect(url);
-        let dbo = client.db("figureshop");   
+        let dbo = client.db("figureshop");
         await dbo.collection("products").insertOne(newProducts);
-        res.redirect('/products');
-    }
+        res.redirect('/products');}
+    
 })
 
 app.get('/delete',async (req,res)=>{
@@ -74,7 +81,7 @@ app.post('/doSearchProducts',async (req,res)=>{
     let inputName = req.body.txtName;
     let client= await MongoClient.connect(url);
     let dbo = client.db("figureshop");
-    let results = await dbo.collection("products").find({name: new RegExp(inputName,'i')}).toArray();
+    let results = await dbo.collection("products").find({name: new RegExp(inputName,"i")}).toArray();
     
     res.render('allProducts',{model:results});
 })
