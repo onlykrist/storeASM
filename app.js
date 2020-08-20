@@ -46,25 +46,26 @@ app.post('/doInsertProducts',async (req,res)=>{
             return false;
             }
         }
-    
+    //neu khong nhap gia tri
     if(inputName.trim().length ==0){  
         res.render('insertProducts',{nameError:"You not input Name!",priceError:null,amountError:null});
     }else{
+        //khong duoc nhap chu
         if(isNaN(inputPrice,inputAmount)){
             res.render('insertProducts',{nameError:null,priceError:"Chi duoc nhap so",amountError:"Chi duoc nhap so"});
             return false;
         };
-
+        //gia tri lon hon hoac nho hon
     if(inputPrice < 1 || inputAmount < 1){
         res.render('insertProducts',{nameError:null,priceError:"Gia tri phai lon hon 0", amountError:"Gia tri phai lon hon 0"});
         return false;
     }  
+
         let newProducts = { name : inputName , size : inputSize , price : inputPrice , amount : inputAmount , image : inputImage};
         let client= await MongoClient.connect(url);
         let dbo = client.db("figureshop");
         await dbo.collection("products").insertOne(newProducts);
         res.redirect('/products');}
-    
 })
 
 app.get('/delete',async (req,res)=>{
