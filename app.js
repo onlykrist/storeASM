@@ -2,7 +2,7 @@ const express = require('express');
 const engines = require('consolidate');
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 var server=app.listen(PORT,function() {});
 
 
@@ -13,7 +13,7 @@ var publicDir = require('path').join(__dirname,'/public');
 app.use(express.static(publicDir));
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb+srv://tiendung20:CR8kwEcISjylBr88@cluster0.vjnfl.mongodb.net/figureshop";
+var url = "mongodb://localhost:27017";
 //npm i handlebars consolidate --save
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
